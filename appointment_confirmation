@@ -1,0 +1,9 @@
+Hello {{1}}
+
+Your appointment is confirmed.
+
+Token Number: {{2}}
+Doctor: {{3}}
+Time: {{4}}
+
+Thank you.

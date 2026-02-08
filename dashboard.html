@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Lavanys Clinic</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+    .container { max-width: 1100px; margin: auto; }
+    h1 { color: #4f46e5; }
+    .logout { float: right; background: #e74c3c; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    th, td { padding: 12px; border: 1px solid #eee; text-align: left; }
+    th { background: #4f46e5; color: white; }
+    .no-data { text-align: center; color: #777; padding: 40px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Dashboard 
+      <button class="logout" onclick="location.href='/admin/logout'">Logout</button>
+    </h1>
+
+    {% if bookings %}
+      {% for date, blist in bookings.items() %}
+        <h3>Date: {{ date }} ({{ blist|length }} bookings)</h3>
+        <table>
+          <tr>
+            <th>Doctor</th>
+            <th>Token</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Time</th>
+            <th>Status</th>
+          </tr>
+          {% for b in blist %}
+          <tr>
+            <td>{{ b.doctor or 'N/A' }}</td>
+            <td>{{ b.token }}</td>
+            <td>{{ b.name }}</td>
+            <td>{{ b.phone }}</td>
+            <td>{{ b.time or 'N/A' }}</td>
+            <td>{{ b.status }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        <br><br>
+      {% endfor %}
+    {% else %}
+      <p class="no-data">No appointments booked yet.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

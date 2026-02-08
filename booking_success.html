@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking Confirmed - Lavanys Clinic</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .success-card {
+      background: white;
+      padding: 3rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      text-align: center;
+      max-width: 520px;
+      width: 90%;
+    }
+    .icon {
+      font-size: 5.5rem;
+      color: #10b981;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      color: #065f46;
+      margin-bottom: 1.2rem;
+      font-size: 2.5rem;
+    }
+    .details {
+      background: #f3f4f6;
+      padding: 1.8rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      font-size: 1.15rem;
+      line-height: 1.6;
+    }
+    .token {
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: #3b82f6;
+      margin: 1rem 0;
+      background: #eff6ff;
+      padding: 1rem;
+      border-radius: 12px;
+    }
+    .btn-home {
+      display: inline-block;
+      background: #3b82f6;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      transition: all 0.3s;
+    }
+    .btn-home:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+<div class="success-card">
+  <div class="icon"><i class="fas fa-check-circle"></i></div>
+  <h1>Appointment Confirmed!</h1>
+
+  <div class="details">
+    <p><strong>Doctor:</strong> {{ doctor }}</p>
+    <p><strong>Date:</strong> {{ date }}</p>
+    <p><strong>Time:</strong> {{ time_slot }}</p>
+    <p><strong>Token Number:</strong></p>
+    <div class="token">{{ token }}</div>
+  </div>
+
+  <p style="font-size:1.15rem; color:#065f46;">
+    SMS with all details has been sent to <strong>{{ phone }}</strong>
+  </p>
+
+  <a href="/" class="btn-home">Back to Home</a>
+</div>
+
+</body>
+</html>

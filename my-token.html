@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-5 col-md-7">
+    <div class="card shadow-sm">
+      <div class="card-header bg-info text-white text-center">
+        <h4>Check Your Token</h4>
+      </div>
+      <div class="card-body">
+
+        <form id="checkTokenForm">
+          <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="tel"
+                   class="form-control"
+                   id="checkPhone"
+                   pattern="[0-9]{10}"
+                   placeholder="Enter 10-digit phone"
+                   required>
+          </div>
+          <button type="submit" class="btn btn-info w-100">
+            Check Status
+          </button>
+        </form>
+
+        <!-- RESULT -->
+        <div id="resultCard" class="mt-4 d-none">
+          <div class="alert alert-info">
+            <h5 id="patientName"></h5>
+            <p>Date: <strong id="bookingDate"></strong></p>
+            <p>Token Number: <strong id="tokenNumber" class="fs-4"></strong></p>
+            <p>Status: <strong id="status"></strong></p>
+            <p>Booked At: <strong id="bookedAt"></strong></p>
+          </div>
+        </div>
+
+        <div id="errorMsg" class="alert alert-danger mt-3 d-none"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById("checkTokenForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const phone = document.getElementById("checkPhone").value;
+
+  fetch("/api/check-token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ phone: phone })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("resultCard").classList.add("d-none");
+    document.getElementById("errorMsg").classList.add("d-none");
+
+    if (data.found) {
+      document.getElementById("patientName").innerText = data.name;
+      document.getElementById("bookingDate").innerText = data.date;
+      document.getElementById("tokenNumber").innerText = data.token;
+      document.getElementById("status").innerText = data.status;
+      document.getElementById("bookedAt").innerText = data.booked_at;
+
+      document.getElementById("resultCard").classList.remove("d-none");
+    } else {
+      document.getElementById("errorMsg").innerText = "No booking found for this phone number.";
+      document.getElementById("errorMsg").classList.remove("d-none");
+    }
+  })
+  .catch(() => {
+    document.getElementById("errorMsg").innerText = "Server error. Try again.";
+    document.getElementById("errorMsg").classList.remove("d-none");
+  });
+});
+</script>
+
+{% endblock %}

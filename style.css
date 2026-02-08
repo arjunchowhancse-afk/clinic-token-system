@@ -1,0 +1,19 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.card-header {
+  font-weight: 500;
+}
+
+.btn-primary, .btn-info, .btn-warning, .btn-danger {
+  font-weight: 500;
+}
+
+#submitBtn.loading::after {
+  content: " ...";
+}
+
+.alert-success, .alert-danger {
+  margin-top: 1rem;
+}

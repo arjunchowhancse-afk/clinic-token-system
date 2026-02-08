@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lavanys Clinic • Premium Healthcare</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f8f9ff;
+      --card: #ffffff;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-glow: rgba(59, 130, 246, 0.18);
+      --accent: #8b5cf6;
+      --text: #0f172a;
+      --text-light: #334155;
+      --text-lighter: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --success: #10b981;
+      --radius: 1.5rem;
+      --shadow: 0 12px 32px -12px rgba(0,0,0,0.11);
+      --shadow-hover: 0 20px 40px -12px rgba(59,130,246,0.22);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(226,232,240,0.7);
+      padding: 1.4rem 5%;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.6px;
+    }
+
+    .logo span {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2.6rem;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.08rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      padding: 0.85rem 2rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.05rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 6px 20px rgba(59,130,246,0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* ────────────────────────────────────── */
+    /*            APPOINTMENT SECTION         */
+    /* ────────────────────────────────────── */
+
+    #appointment {
+      padding: 8rem 5% 10rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .title-wrapper {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.6rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      color: var(--text-lighter);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .form-container {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 3.8rem 3.5rem 4rem;
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      margin-bottom: 2.8rem;
+      font-size: 0.95rem;
+      color: var(--text-lighter);
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--border);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .step.active .step-circle {
+      background: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-glow);
+      transform: scale(1.15);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.2rem 2.6rem;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.5rem;
+      color: var(--text-lighter);
+      font-size: 1.05rem;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      transform-origin: left top;
+    }
+
+    input:focus + label,
+    input:not(:placeholder-shown) + label,
+    select:focus + label,
+    select:not([value=""]) + label,
+    textarea:focus + label,
+    textarea:not(:placeholder-shown) + label {
+      top: -0.75rem;
+      left: 1.2rem;
+      font-size: 0.88rem;
+      color: var(--primary);
+      background: var(--card);
+      padding: 0 0.5rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 1.4rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 1.1rem;
+      font-size: 1.08rem;
+      background: #fdfdff;
+      transition: all 0.25s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 5px var(--primary-glow);
+      background: white;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .field-error {
+      color: var(--error);
+      font-size: 0.93rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .submit-area {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    .submit-btn {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      padding: 1.3rem 3.8rem;
+      font-size: 1.22rem;
+      font-weight: 600;
+      border-radius: 3.5rem;
+      cursor: pointer;
+      transition: all 0.35s;
+      box-shadow: 0 8px 24px rgba(59,130,246,0.3);
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(59,130,246,0.38);
+    }
+
+    .submit-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .success-screen,
+    .error-screen {
+      padding: 2.5rem;
+      border-radius: 1.2rem;
+      margin: 2rem 0;
+      text-align: center;
+      font-size: 1.15rem;
+      display: none;
+    }
+
+    .success-screen {
+      background: rgba(16,185,129,0.12);
+      color: #065f46;
+      border: 1px solid rgba(16,185,129,0.35);
+    }
+
+    .error-screen {
+      background: rgba(239,68,68,0.12);
+      color: #991b1b;
+      border: 1px solid rgba(239,68,68,0.35);
+    }
+
+    .success-icon {
+      font-size: 3.5rem;
+      color: var(--success);
+      margin-bottom: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      #appointment {
+        padding: 6rem 6% 8rem;
+      }
+      .main-title {
+        font-size: 2.9rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .form-container {
+        padding: 2.5rem 1.8rem;
+      }
+      .submit-btn {
+        padding: 1.1rem 2.8rem;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">Lavanys <span>Clinic</span></div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Doctors</a>
+      <a href="/admin/login" class="btn btn-outline">Admin</a>
+      <a href="#appointment" class="btn btn-primary">Book Now</a>
+    </nav>
+  </div>
+</header>
+
+<section id="appointment">
+  <div class="title-wrapper">
+    <h1 class="main-title">Book Your Appointment</h1>
+    <p class="subtitle">Premium care begins with a single step. Reserve your time with our expert doctors.</p>
+  </div>
+
+  <div class="form-container">
+
+    <div class="steps">
+      <div class="step active"><span class="step-circle">1</span><span>Details</span></div>
+      <div class="step"><span class="step-circle">2</span><span>Confirm</span></div>
+    </div>
+
+    <form id="bookForm" class="form-grid">
+
+      <div class="form-group full">
+        <select id="doctor" required>
+          <option value=""></option>
+          <option value="Dr. Jayant Chopkar">Dr. Jayant Chopkar – General & Family Medicine</option>
+          <option value="Dr. Pranjali">Dr. Pranjali – Gynecology & Women's Health</option>
+        </select>
+        <label>Choose Doctor *</label>
+        <div class="field-error" id="err-doctor"></div>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="name" required autocomplete="name" placeholder=" ">
+        <label>Full Name *</label>
+        <div class="field-error" id="err-name"></div>
+      </div>
+
+      <div class="form-group">
+        <input type="tel" id="phone" pattern="[0-9]{10}" required placeholder=" " autocomplete="tel">
+        <label>Mobile Number *</label>
+        <div class="field-error" id="err-phone"></div>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="age" min="1" max="120" placeholder=" ">
+        <label>Age</label>
+      </div>
+
+      <div class="form-group">
+        <input type="date" id="date" required min="2025-02-09" placeholder=" ">
+        <label>Preferred Date *</label>
+        <div class="field-error" id="err-date"></div>
+      </div>
+
+      <div class="form-group">
+        <select id="time" required>
+          <option value=""></option>
+          <option>17:00 – 17:30</option>
+          <option>17:30 – 18:00</option>
+          <option>18:00 – 18:30</option>
+          <option>18:30 – 19:00</option>
+          <option>19:00 – 19:30</option>
+          <option>19:30 – 20:00</option>
+        </select>
+        <label>Preferred Time Slot *</label>
+        <div class="field-error" id="err-time"></div>
+      </div>
+
+      <div class="form-group full">
+        <textarea id="reason" rows="4" placeholder=" "></textarea>
+        <label>Reason for Visit (optional)</label>
+      </div>
+
+      <div class="success-screen" id="successScreen"></div>
+      <div class="error-screen" id="errorScreen"></div>
+
+      <div class="submit-area">
+        <button type="submit" class="submit-btn" id="submitBtn">Confirm & Book</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<script>
+const form = document.getElementById('bookForm');
+const submitBtn = document.getElementById('submitBtn');
+const successScreen = document.getElementById('successScreen');
+const errorScreen = document.getElementById('errorScreen');
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function clearAllErrors() {
+  document.querySelectorAll('.field-error').forEach(el => {
+    el.textContent = '';
+    el.style.display = 'none';
+  });
+  successScreen.style.display = 'none';
+  errorScreen.style.display = 'none';
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearAllErrors();
+
+  const data = {
+    doctor: document.getElementById('doctor').value.trim(),
+    name: document.getElementById('name').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    age: document.getElementById('age').value.trim() || null,
+    date: document.getElementById('date').value,
+    time: document.getElementById('time').value.trim(),
+    reason: document.getElementById('reason').value.trim() || null
+  };
+
+  let valid = true;
+
+  if (!data.doctor) { showError('err-doctor', 'Please select a doctor'); valid = false; }
+  if (!data.name.trim()) { showError('err-name', 'Name is required'); valid = false; }
+  if (!/^\d{10}$/.test(data.phone)) { showError('err-phone', 'Enter valid 10-digit mobile number'); valid = false; }
+  if (!data.date) { showError('err-date', 'Select preferred date'); valid = false; }
+  if (!data.time) { showError('err-time', 'Select time slot'); valid = false; }
+
+  if (!valid) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Processing...';
+
+  try {
+    const res = await fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      successScreen.innerHTML = `
+        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+        <strong style="font-size:1.4rem; display:block; margin-bottom:1rem;">Appointment Confirmed!</strong>
+        <div style="margin:1.2rem 0; line-height:1.7;">
+          <strong>Token:</strong> ${result.token}<br>
+          <strong>Doctor:</strong> ${data.doctor}<br>
+          <strong>Date & Time:</strong> ${data.date} • ${data.time}<br>
+        </div>
+        <div style="margin-top:1.5rem; color:#065f46;">
+          SMS with details has been sent to <strong>${data.phone}</strong>
+        </div>
+      `;
+      successScreen.style.display = 'block';
+      form.reset();
+    } else {
+      errorScreen.textContent = result.message || 'We couldn’t process your booking. Please try again.';
+      errorScreen.style.display = 'block';
+    }
+  } catch (err) {
+    errorScreen.textContent = 'Network error. Please check your connection and try again.';
+    errorScreen.style.display = 'block';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Confirm & Book';
+  }
+});
+</script>
+<script>
+const form = document.getElementById('bookForm');
+const submitBtn = document.getElementById('submitBtn');
+const successScreen = document.getElementById('successScreen');
+const errorScreen = document.getElementById('errorScreen');
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function clearAllErrors() {
+  document.querySelectorAll('.field-error').forEach(el => {
+    el.textContent = '';
+    el.style.display = 'none';
+  });
+  successScreen.style.display = 'none';
+  errorScreen.style.display = 'none';
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearAllErrors();
+
+  const data = {
+    doctor: document.getElementById('doctor').value.trim(),
+    name: document.getElementById('name').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    age: document.getElementById('age').value.trim() || null,
+    date: document.getElementById('date').value,
+    time: document.getElementById('time').value.trim(),
+    reason: document.getElementById('reason').value.trim() || null
+  };
+
+  let valid = true;
+
+  if (!data.doctor) { showError('err-doctor', 'Please select a doctor'); valid = false; }
+  if (!data.name.trim()) { showError('err-name', 'Name is required'); valid = false; }
+  if (!/^\d{10}$/.test(data.phone)) { showError('err-phone', 'Enter valid 10-digit mobile number'); valid = false; }
+  if (!data.date) { showError('err-date', 'Select preferred date'); valid = false; }
+  if (!data.time) { showError('err-time', 'Select time slot'); valid = false; }
+
+  if (!valid) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Processing...';
+
+  try {
+    const res = await fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      // Redirect to thank you page instead of showing success screen
+      window.location.href = result.redirect;
+    } else {
+      errorScreen.textContent = result.message || 'We couldn’t process your booking. Please try again.';
+      errorScreen.style.display = 'block';
+    }
+  } catch (err) {
+    errorScreen.textContent = 'Network error. Please check your connection and try again.';
+    errorScreen.style.display = 'block';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Confirm & Book';
+  }
+});
+</script>
+
+</body>
+</html>

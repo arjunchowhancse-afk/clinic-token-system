@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clinic Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 { color: #2c3e50; }
+    h2 { margin-top: 30px; }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .badge {
+      background: #2ecc71;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #f4f4f4;
+    }
+
+    .danger {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .primary {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .logout {
+      background: #555;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .info {
+      background: #ecf0f1;
+      padding: 10px;
+      border-left: 4px solid #3498db;
+      margin-top: 10px;
+    }
+
+    hr {
+      margin: 30px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="top-bar">
+  <div>
+    <h1>🧑‍⚕️ Clinic Admin Dashboard</h1>
+    <span class="badge">Admin Logged In</span>
+  </div>
+  <a href="/admin/logout">
+    <button class="logout">Logout</button>
+  </a>
+</div>
+
+<!-- ========== PLANNED LEAVE ========== -->
+<h2>📅 Planned Leave (Future Dates)</h2>
+<p>Select a future date to disable bookings for that day.</p>
+
+<input type="date" id="leaveDate">
+<button class="primary" onclick="setLeave()">Disable Booking</button>
+
+<div class="info">
+  ℹ️ Patients will not be able to book tokens on selected dates.
+</div>
+
+<hr>
+
+<!-- ========== EMERGENCY CLOSE ========== -->
+<h2>🚨 Emergency (Unplanned Leave)</h2>
+<p>Use this in case doctor is unavailable today.</p>
+
+<button class="danger" onclick="closeToday()">Close OPD Today</button>
+
+<div class="info">
+  ⚠️ All today's tokens will be cancelled and patients notified (simulated).
+</div>
+
+<hr>
+
+<!-- ========== BOOKINGS ========== -->
+<h2>📋 All Bookings</h2>
+
+{% if bookings %}
+  {% for date, blist in bookings.items() %}
+    <h3>📅 Date: {{ date }} | Total Tokens: {{ blist|length }}</h3>
+
+    <table>
+      <tr>
+        <th>Token</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Status</th>
+        <th>Booked At</th>
+      </tr>
+
+      {% for b in blist %}
+      <tr>
+        <td>{{ b.token }}</td>
+        <td>{{ b.name }}</td>
+        <td>{{ b.phone }}</td>
+        <td>{{ b.status }}</td>
+        <td>{{ b.booked_at }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% endfor %}
+{% else %}
+  <p>No bookings found.</p>
+{% endif %}
+
+<script>
+function setLeave() {
+  const date = document.getElementById("leaveDate").value;
+  if (!date) {
+    alert("Please select a date");
+    return;
+  }
+
+  fetch("/api/planned-leave", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ date: date })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    document.getElementById("leaveDate").value = "";
+    location.reload();
+  });
+}
+
+function closeToday() {
+  if (!confirm("Are you sure you want to close today's OPD?")) return;
+
+  fetch("/api/close-today", { method: "POST" })
+    .then(res => res.json())
+    .then(data => {
+      alert(data.message);
+      location.reload();
+    });
+}
+</script>
+
+</body>
+</html>
